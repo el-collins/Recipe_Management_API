@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import RecipeForm from './components/RecipeForm';
 import Navbar from './components/Navbar';
-
+import RecipeForm from './components/RecipeForm';
 
 // Assuming you have a function to fetch a single recipe by ID
 const fetchRecipeById = async (recipeId) => {
@@ -17,6 +16,8 @@ const fetchRecipeById = async (recipeId) => {
 
 const App = () => {
   const [recipes, setRecipes] = useState([]);
+  const [editingRecipeId, setEditingRecipeId] = useState(null);
+  const [initialValues, setInitialValues] = useState(null); // State to hold initial values for editing
 
   useEffect(() => {
     // Fetch recipes from the server when the component mounts
@@ -36,8 +37,9 @@ const App = () => {
     // Fetch the recipe data for editing
     const recipe = await fetchRecipeById(recipeId);
     if (recipe) {
-      // Set the editingRecipeId and pass initialValues to RecipeForm
+      // Set the editingRecipeId and initialValues
       setEditingRecipeId(recipeId);
+      setInitialValues(recipe); // Set the initial values for editing
     } else {
       // Handle error
     }
@@ -59,19 +61,29 @@ const App = () => {
     }
     // Reset editingRecipeId after submission
     setEditingRecipeId(null);
+    // Reset initialValues after submission
+    setInitialValues(null);
   };
 
-
   return (
-    <div>
+    <>
       <Navbar/>
       <div className="container mx-auto mt-8">
-        <h1 className="text-3xl font-semibold mb-4">Recipe Management</h1>
-        {/* <RecipeForm onSubmit={handleSubmit} /> */}
+        {/* Render RecipeForm component */}
+        <RecipeForm initialValues={initialValues} onSubmit={handleSubmit} />
+        
         {/* Render RecipeList component passing recipes as prop */}
-      
+        {/* Here, you can map over recipes and render a list of recipes */}
+        {recipes.map((recipe) => (
+          <div key={recipe.id}>
+            <h2>{recipe.title}</h2>
+            <p>{recipe.description}</p>
+            {/* Add an edit button for each recipe */}
+            <button onClick={() => handleEditRecipe(recipe.id)}>Edit</button>
+          </div>
+        ))}
       </div>
-    </div>
+    </>
   );
 };
 
