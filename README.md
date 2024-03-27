@@ -1,6 +1,5 @@
-
-```markdown
 # Recipe Management API 🍲
+```markdown
 
 Welcome to the Recipe Management API, where culinary art meets coding! This FastAPI backend service is your digital sous-chef, helping you manage a delicious database of recipes, ingredients, and nutritional facts.
 
