@@ -9,5 +9,12 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+/* Add this CSS to your main stylesheet */
+body {
+  background: linear-gradient(to right, #cef8e4, #feb47b);
+  /* Fallback for browsers that do not support gradients */
+  background-color: #5f7fff;
+}
+
 
 
