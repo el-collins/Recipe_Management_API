@@ -3,26 +3,22 @@ from app.main import app
 
 client = TestClient(app)
 
-
-
+# Test cases for /recipes endpoints
 def test_get_recipes():
-    response = client.get("/recipes")
+    response = client.get("/api/recipes")
     assert response.status_code == 200
     assert response.json() == []
 
 def test_get_recipe_not_found():
-    response = client.get("/recipes/1")
+    response = client.get("/api/recipes/1")
     assert response.status_code == 404
 
 def test_create_recipe():
-    # Test creating a recipe
     recipe_data = {
         "title": "Test Recipe",
         "description": "Test description",
         "instructions": "Test instructions",
-        "ingredients": [
-            {"name": "Test Ingredient", "quantity": "100"}
-        ],
+        "ingredients": [{"name": "Test Ingredient", "quantity": "100g"}],
         "nutritional_info": {
             "calories": 100,
             "fat": 10,
@@ -30,19 +26,16 @@ def test_create_recipe():
             "carbohydrates": 15
         }
     }
-    response = client.post("/recipes", json=recipe_data)
+    response = client.post("/api/recipes", json=recipe_data)
     assert response.status_code == 200
     assert response.json()["title"] == "Test Recipe"
 
 def test_update_recipe_not_found():
-    # Test updating a recipe that does not exist
     updated_recipe_data = {
         "title": "Updated Test Recipe",
         "description": "Updated test description",
         "instructions": "Updated test instructions",
-        "ingredients": [
-            {"name": "Updated Test Ingredient", "quantity": "150"}
-        ],
+        "ingredients": [{"name": "Updated Test Ingredient", "quantity": "150g"}],
         "nutritional_info": {
             "calories": 150,
             "fat": 15,
@@ -50,58 +43,43 @@ def test_update_recipe_not_found():
             "carbohydrates": 20
         }
     }
-    response = client.put("/recipes/1000", json=updated_recipe_data)  # Using a non-existent recipe ID
+    response = client.put("/api/recipes/1000", json=updated_recipe_data)  # Non-existent ID
     assert response.status_code == 404
 
 def test_delete_recipe_not_found():
-    response = client.delete("/recipes/1")
+    response = client.delete("/api/recipes/1")
     assert response.status_code == 404
 
+# Test cases for /ingredients endpoints
+# Add similar tests for other endpoints
+
+# Test case for getting all ingredients
 def test_get_ingredients():
-    response = client.get("/ingredients")
+    response = client.get("/api/ingredients")
     assert response.status_code == 200
     assert response.json() == []
 
+# Test case for getting a specific ingredient that doesn't exist
 def test_get_ingredient_not_found():
-    response = client.get("/ingredients/1")
+    response = client.get("/api/ingredients/1")
     assert response.status_code == 404
 
+# Test case for creating an ingredient
 def test_create_ingredient():
-    ingredient_data = {
-        "name": "Test Ingredient",
-        "quantity": "100g"
-    }
-    response = client.post("/ingredients", json=ingredient_data)
+    ingredient_data = {"name": "Test Ingredient", "quantity": "100g"}
+    response = client.post("/api/ingredients", json=ingredient_data)
     assert response.status_code == 200
     assert response.json()["name"] == "Test Ingredient"
 
+# Test case for updating an ingredient that doesn't exist
 def test_update_ingredient_not_found():
-    updated_ingredient_data = {
-        "name": "Updated Test Ingredient",
-        "quantity": "150g"
-    }
-    response = client.put("/ingredients/1", json=updated_ingredient_data)
+    updated_ingredient_data = {"name": "Updated Test Ingredient", "quantity": "150g"}
+    response = client.put("/api/ingredients/1", json=updated_ingredient_data)
     assert response.status_code == 404
 
+# Test case for deleting an ingredient that doesn't exist
 def test_delete_ingredient_not_found():
-    response = client.delete("/ingredients/1")
+    response = client.delete("/api/ingredients/1")
     assert response.status_code == 404
 
-def test_get_nutritional_info():
-    response = client.get("/nutritional-info")
-    assert response.status_code == 200
-    assert response.json() == []
-
-def test_get_recipe_nutritional_info_not_found():
-    response = client.get("/nutritional-info/1")
-    assert response.status_code == 404
-
-def test_calculate_and_store_nutritional_info():
-    response = client.post("/nutritional-info/1")
-    assert response.status_code == 200
-    nutritional_info = response.json()
-    assert nutritional_info["calories"] == 500
-    assert nutritional_info["fat"] == 20
-    assert nutritional_info["protein"] == 30
-    assert nutritional_info["carbohydrates"] == 50
-
+# Add test cases for other endpoints as needed

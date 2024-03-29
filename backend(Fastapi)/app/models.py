@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel, Field
-from uuid import uuid4  # Import uuid4 for generating UUIDs
+
 
 
 class NutritionalInfo(BaseModel):
@@ -17,7 +17,7 @@ class Ingredient(BaseModel):
 
 
 class Recipe(BaseModel):
-    id: str = str(uuid4())  # Automatically generate a UUID for each recipe
+    id: int
     title: str = Field(..., description="Title of the recipe")
     description: str = Field(..., description="Description of the dish")
     instructions: str = Field(..., description="Cooking instructions")

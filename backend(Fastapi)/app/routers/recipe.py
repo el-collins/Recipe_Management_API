@@ -1,11 +1,10 @@
 from fastapi import APIRouter, HTTPException, Path
 from typing import List, Annotated
 from app.models import Recipe
+from app.database import fetch_all_recipes, fetch_one_recipe, create_new_recipe, update_existing_recipe, remove_recipe
 
-router = APIRouter()
 
-# Dummy data to simulate database
-recipes_db = []
+router = APIRouter(prefix="/api")
 
 
 @router.get(
@@ -21,11 +20,12 @@ async def get_recipes():
 
     Retrieve all recipes along with their details from the database.
     """
-    return recipes_db
+    response = await fetch_all_recipes()
+    return response
 
 
 # Get recipe by id
-@router.get("/recipes/{recipe_id}", response_model=Recipe)
+@router.get("/recipes/{recipe_id}", response_model=Recipe, tags=["Recipes"])
 async def get_recipe(
     recipe_id: Annotated[
         int,
@@ -39,16 +39,16 @@ async def get_recipe(
 
     Retrieve the recipe details for a specific recipe ID from the database.
     """
-    for recipe in recipes_db:
-        if recipe.id == recipe_id:
-            return recipe
-    raise HTTPException(status_code=404, detail="Recipe not found")
-
+    response =  await fetch_one_recipe(recipe_id)
+    if not response:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return response
+ 
 
 @router.post(
     "/recipes",
     response_model=Recipe,
-    summary="Create new recipe",
+    summary="Create new recipe", tags=["Recipes"]
 )
 async def create_recipe(recipe: Recipe):
     """
@@ -56,16 +56,15 @@ async def create_recipe(recipe: Recipe):
 
     Add a new recipe to the database.
     """
-    # global recipe_id_counter
-    # recipe_id_counter += 1  # Increment the counter for each new recipe
-    # recipe.id = recipe_id_counter  # Assign the generated ID to the recipe
-    # recipes_db.append(recipe)
-    # return recipe
-    recipes_db.append(recipe)
-    return recipe
+    lowercase_recipe = {k.lower(): v for k, v in recipe.dict().items()}
+    response = await create_new_recipe(lowercase_recipe)
+    if response:
+        print(f"successfully created recipe: {response}")
+        return response
+    raise HTTPException(400, "Something went wrong")
 
-
-@router.put("/recipes/{recipe_id}", response_model=Recipe)
+# UPDATE
+@router.put("/recipes/{recipe_id}", response_model=Recipe, tags=["Recipes"])
 async def update_recipe(recipe_id: Annotated[int, Path(description="The ID of the item to delete")],
     recipe: Recipe,):
     """
@@ -73,14 +72,13 @@ async def update_recipe(recipe_id: Annotated[int, Path(description="The ID of th
 
     Update the details of a recipe with the given ID in the database.
     """
-    for index, db_recipe in enumerate(recipes_db):
-        if db_recipe.id == recipe_id:
-            recipes_db[index] = recipe
-            return recipe
+    response = await update_existing_recipe(recipe_id, recipe)
+    if response:
+        return response
     raise HTTPException(status_code=404, detail="Recipe not found")
 
 
-@router.delete("/recipes/{recipe_id}")
+@router.delete("/recipes/{recipe_id}", tags=["Recipes"])
 async def delete_recipe(
     recipe_id: Annotated[int, Path(description="The ID of the item to delete")]
 ):
@@ -89,15 +87,9 @@ async def delete_recipe(
 
     Remove a recipe with the specified ID from the database.
     """
-    for index, recipe in enumerate(recipes_db):
-        if recipe.id == recipe_id:
-            del recipes_db[index]
-            return recipe
+    response = await remove_recipe(recipe_id)
+    if response:
+        return {"message": f"Deleted recipe with id {recipe_id}"}
     raise HTTPException(status_code=404, detail="Recipe not found")
 
     
-    # if recipe_id < len(recipes_db):
-    #     del recipes_db[recipe_id]
-    #     return {"message": "Recipe deleted successfully"}
-    # else:
-    #     raise HTTPException(status_code=404, detail="Recipe not found")
