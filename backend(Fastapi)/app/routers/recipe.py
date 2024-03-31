@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Path
 from typing import List, Annotated
 from app.models import Recipe
-from app.database import fetch_all_recipes, fetch_one_recipe, create_new_recipe, update_existing_recipe, remove_recipe
+from app.databases.recipe_database import fetch_all_recipes, fetch_one_recipe, create_new_recipe, update_existing_recipe, remove_recipe
 
 
 router = APIRouter(prefix="/api")

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import recipe, ingredient, nutritional_info
+from app.routers import recipe, ingredient
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -17,4 +17,4 @@ app.add_middleware(
 # Include routers
 app.include_router(recipe.router)
 app.include_router(ingredient.router)
-app.include_router(nutritional_info.router)
+# app.include_router(nutritional_info.router)

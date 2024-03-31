@@ -2,12 +2,12 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models import Ingredient
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 # Dummy data to simulate database
 ingredients_db = []
 
-@router.get("/ingredients", response_model=List[Ingredient])
+@router.get("/ingredients", response_model=List[Ingredient], tags=["Ingredients"])
 async def get_ingredients():
     """
     Retrieve a list of all ingredients.
@@ -17,7 +17,7 @@ async def get_ingredients():
     """
     return ingredients_db
 
-@router.get("/ingredients/{ingredient_id}", response_model=Ingredient)
+@router.get("/ingredients/{ingredient_id}", response_model=Ingredient, tags=["Ingredients"])
 async def get_ingredient(ingredient_id: int):
     """
     Retrieve an ingredient by ID.
@@ -36,7 +36,9 @@ async def get_ingredient(ingredient_id: int):
     else:
         raise HTTPException(status_code=404, detail="Ingredient not found")
 
-@router.post("/ingredients", response_model=Ingredient)
+
+
+@router.post("/ingredients", response_model=Ingredient, tags=["Ingredients"])
 async def create_ingredient(ingredient: Ingredient):
     """
     Create a new ingredient.
@@ -50,7 +52,7 @@ async def create_ingredient(ingredient: Ingredient):
     ingredients_db.append(ingredient)
     return ingredient
 
-@router.put("/ingredients/{ingredient_id}", response_model=Ingredient)
+@router.put("/ingredients/{ingredient_id}", response_model=Ingredient, tags=["Ingredients"])
 async def update_ingredient(ingredient_id: int, ingredient: Ingredient):
     """
     Update an existing ingredient by ID.
@@ -72,7 +74,7 @@ async def update_ingredient(ingredient_id: int, ingredient: Ingredient):
         raise HTTPException(status_code=404, detail="Ingredient not found")
 
 
-@router.delete("/ingredients/{ingredient_id}")
+@router.delete("/ingredients/{ingredient_id}", tags=["Ingredients"])
 async def delete_ingredient(ingredient_id: int):
     """
     Deletes an ingredient from the database.
