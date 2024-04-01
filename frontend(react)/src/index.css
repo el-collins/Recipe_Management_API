@@ -6,7 +6,7 @@
 /* Correct order */
 
 /* Other CSS rules */
-body {
+/* body {
   font-family: "Poppins", sans-serif;
   --tw-bg-opacity: 1;
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
@@ -17,12 +17,12 @@ body {
   background-image: linear-gradient(to right, #6dd5ed, #2193b0);
   
   /* Ensure the gradient covers the full screen */
-  min-height: 100vh;
+  /* min-height: 100vh; */
   
   /* Make sure the gradient is fixed and covers the entire body */
-  background-attachment: fixed;
-  background-size: cover;
-}
+  /* background-attachment: fixed; */
+  /* background-size: cover; */
+/* } */ 
 
 
 

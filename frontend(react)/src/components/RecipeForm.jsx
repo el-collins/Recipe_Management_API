@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FloatingLabel, Textarea } from "flowbite-react";
 
 // eslint-disable-next-line react/prop-types
 const RecipeForm = ({ onSubmit, initialValues }) => {
@@ -61,75 +62,74 @@ const RecipeForm = ({ onSubmit, initialValues }) => {
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-20">
       <div className="mb-4">
-        <label htmlFor="title" className="block text-[#003366] font-semibold">
-          Title:
-        </label>
-        <input
+        <FloatingLabel
           type="text"
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
           required
-          className="w-full mt-2 p-2 border rounded-xl"
+          variant="outlined"
+          label="Title"
         />
       </div>
-      <div className="mb-4">
-        <label
-          htmlFor="description"
-          className="block text-[#003366] font-semibold"
-        >
-          Description:
-        </label>
-        <textarea
+
+      <div className="mb-4 relative">
+        <Textarea
+        color='primary'
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
+          placeholder=""
           required
-          className="w-full mt-2 p-2 border rounded-xl"
         />
-      </div>
-      <div className="mb-4">
         <label
-          htmlFor="cookingInstructions"
-          className="block text-[#003366] font-semibold"
+          htmlFor="message"
+          className="absolute left-2 -top-2.5 text-sm text-gray-500 transition-all bg-white px-1"
         >
-          Cooking Instructions:
+          Description
         </label>
-        <textarea
+      </div>
+
+      <div className="mb-4 relative">
+        <Textarea
+         color='primary'
           id="cookingInstructions"
           value={cookingInstructions}
           onChange={(e) => setCookingInstructions(e.target.value)}
-          placeholder="Cooking Instructions"
+          placeholder=""
           required
-          className="w-full mt-2 p-2 border rounded-xl"
         />
-      </div>
-      <div className="mb-4">
-        <label className="block text-[#003366] font-semibold">
-          Ingredients:
+        <label
+          htmlFor="message"
+          className="absolute left-2 -top-2.5 text-sm text-gray-500 transition-all bg-white px-1"
+        >
+          Cooking Instructions
         </label>
+      </div>
+
+      <div className="mb-4">
         {ingredients.map((ingredient, index) => (
           <div key={index} className="flex items-center mb-2">
-            <input
+            <FloatingLabel
+              variant="outlined"
+              label="Ingredients"
               type="text"
               value={ingredient.name}
               onChange={(e) =>
                 handleIngredientChange(index, "name", e.target.value)
               }
-              placeholder="Ingredient name"
               required
-              className="w-1/2 mr-2 p-2 border rounded-xl"
             />
-            <input
+
+            <FloatingLabel
+              variant="outlined"
+              label="Quantity"
               type="text"
               value={ingredient.quantity}
               onChange={(e) =>
                 handleIngredientChange(index, "quantity", e.target.value)
               }
-              placeholder="Quantity"
-              className="w-1/4 p-2 border rounded-xl"
             />
             <button
               type="button"
@@ -141,23 +141,23 @@ const RecipeForm = ({ onSubmit, initialValues }) => {
           </div>
         ))}
         <div className="flex items-center">
-          <input
+          <FloatingLabel
+            variant="outlined"
+            label="Ingredients"
             type="text"
             value={newIngredient.name}
             onChange={(e) =>
               setNewIngredient({ ...newIngredient, name: e.target.value })
             }
-            placeholder="Ingredient name"
-            className="w-1/2 mr-2 p-2 border rounded-xl"
           />
-          <input
-            type="text"
+          <FloatingLabel
+            variant="outlined"
+            label="Quantity"
+            ype="text"
             value={newIngredient.quantity}
             onChange={(e) =>
               setNewIngredient({ ...newIngredient, quantity: e.target.value })
             }
-            placeholder="Quantity"
-            className="w-1/4 p-2 border rounded-xl"
           />
           <button
             type="button"
@@ -168,14 +168,7 @@ const RecipeForm = ({ onSubmit, initialValues }) => {
           </button>
         </div>
       </div>
-      {/* <div className="mb-4">
-        <label
-          htmlFor="nutritionalInfo"
-          className="block text-[#003366] font-semibold"
-        >
-          Nutritional Information:
-        </label>
-      </div> */}
+
       <button
         type="submit"
         className="bg-green-500 text-[#003366] px-4 py-2 rounded-xl"
