@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.routers import recipe, ingredient
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(title="Recipe Management API")
 
 origins = ["http://localhost:3000"]
 
