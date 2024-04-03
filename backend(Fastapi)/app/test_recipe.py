@@ -50,7 +50,7 @@ async def test_create_recipe():
 @pytest.mark.asyncio(scope="module")
 async def test_update_recipe():
     async with AsyncClient(app=app, base_url="http://127.0.0.1:8000") as client:
-        recipe_id = 3
+        recipe_id = 4
         updated_recipe_data = {
             "id": 0,
             "title": "Updated Recipe Title",
@@ -81,7 +81,7 @@ async def test_update_recipe():
 @pytest.mark.asyncio(scope="module")
 async def test_delete_recipe():
     async with AsyncClient(app=app, base_url="http://test") as client:
-        recipe_id = 3  
+        recipe_id = 4  
         response = await client.delete(f"/api/recipes/{recipe_id}")
         assert response.status_code == 200
         assert response.json()["message"] == f"Deleted recipe with id {recipe_id}"

@@ -1,6 +1,16 @@
-[![Coverage Status](https://coveralls.io/repos/github/el-collins/Recipe_Management_API/badge.svg?branch=main)](https://coveralls.io/github/el-colins/Recipe_Management_API?branch=main)
+![Tests](https://img.shields.io/badge/Tests-PASSING-brightgreen) ![Coverage Status](https://img.shields.io/badge/coverage-91%25-brightgreen) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Poetryize) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-[![Coverage](https://img.shields.io/badge/coverage-90%25-green.svg)](COVERAGE_REPORT_URL)
+
+<!-- [![Tests](https://github.com/thoth2357/Poetryize/actions/workflows/python-app.yml/badge.svg)](https://github.com/thoth2357/Poetryize/actions/workflows/python-app.yml) 
+
+[![Coverage Status](https://coveralls.io/repos/github/thoth2357/Poetryize/badge.svg?branch=main)](https://coveralls.io/github/thoth2357/Poetryize?branch=main) 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)  -->
+
+
+
+
+<!-- [![Tests](https://img.shields.io/badge/tests-PASSING-brightgreen)](https://github.com/el-collins/Recipe_Management_API/actions)
+[![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen)](COVERAGE_REPORT_URL) -->
 
 
 # Recipe Management API 🍲
@@ -22,13 +32,15 @@ To get started, clone this repo and install the required packages:
 ```bash
 git clone https://github.com/your-username/recipe-management-api.git
 cd recipe-management-api
-pip install -r requirements.txt
+poetry install
 ```
+This will install all the necessary dependencies as specified in the pyproject.toml file.
 
 Run the server with:
 
 ```bash
-uvicorn main:app --reload
+poetry run uvicorn app.main:app --reload
+
 ```
 
 ## Endpoints 📍
@@ -55,6 +67,11 @@ This will return the nutritional breakdown based on the ingredients.
 ## Documentation & Testing 📚
 
 We've documented every endpoint with Swagger UI, and we've written tests that cover every conceivable scenario, including those edge cases you thought we forgot!
+Run tests with:
+
+```bash
+poetry run pytest
+```
 
 ## Contributing 🤝
 
