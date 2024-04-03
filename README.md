@@ -1,3 +1,8 @@
+[![Coverage Status](https://coveralls.io/repos/github/el-collins/Recipe_Management_API/badge.svg?branch=main)](https://coveralls.io/github/el-colins/Recipe_Management_API?branch=main)
+
+[![Coverage](https://img.shields.io/badge/coverage-90%25-green.svg)](COVERAGE_REPORT_URL)
+
+
 # Recipe Management API 🍲
 ```markdown
 
